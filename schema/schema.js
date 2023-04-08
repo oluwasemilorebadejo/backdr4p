@@ -63,11 +63,21 @@ const RootQuery = new GraphQLObjectType({
         return User.findAll();
       },
     },
-    client: {
+
+    user: {
       type: UserType,
-      args: { id: { type: GraphQLID } },
+      args: {
+        user_account_number: { type: GraphQLFloat },
+        user_bank_code: { type: GraphQLString },
+      },
       resolve(parent, args) {
-        return User.findOne({ where: { id } });
+        const { user_account_number, user_bank_code } = args;
+        return User.findOne({
+          where: {
+            user_account_number,
+            user_bank_code,
+          },
+        });
       },
     },
   },
