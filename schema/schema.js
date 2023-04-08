@@ -84,8 +84,6 @@ const mutation = new GraphQLObjectType({
         is_verified: { type: GraphQLBoolean, defaultValue: false },
       },
       resolve(parent, args) {
-        // create a new user with the provided arguments and the default value
-        // i can decide to verify the account from here
         const {
           user_account_number,
           user_bank_code,
@@ -113,30 +111,40 @@ const mutation = new GraphQLObjectType({
               },
             };
 
-            axios(options)
+            return axios(options)
               .then((response) => {
                 // console.log(response.data);
-
-                if (user.user_account_name == response.data.data.account_name) {
-                  user.is_verified = true;
-                  user.save();
+                console.log(response.data.data.account_name);
+                const resolvedAccountName = response.data.data.account_name;
+                if (
+                  user_account_name.toLowerCase() ===
+                  resolvedAccountName.toLowerCase()
+                ) {
+                  return user
+                    .update({
+                      is_verified: true,
+                    })
+                    .then((updatedUser) => {
+                      // Return an object that contains the user object and the id
+                      return { ...updatedUser.dataValues, id: updatedUser.id };
+                    });
+                } else {
+                  // Return an object that contains the user object and the id
+                  return { ...user.dataValues, id: user.id };
                 }
               })
               .catch((error) => {
                 console.error(error);
               });
-
-            // Return an object that contains the user object and the id
-            return { ...user.dataValues, id: user.id };
           })
           .catch((error) => {
             console.error(error);
           });
       },
     },
-    verifyUser: {
-      type: UserType,
-    },
+    // verifyUser: {
+    //   type: UserType,
+    // },
   },
 });
 
