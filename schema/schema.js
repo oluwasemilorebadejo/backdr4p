@@ -1,5 +1,6 @@
 const https = require("https");
 const axios = require("axios");
+const levenshtein = require("js-levenshtein");
 
 const User = require("../models/userModel");
 
@@ -113,23 +114,24 @@ const mutation = new GraphQLObjectType({
 
             return axios(options)
               .then((response) => {
-                // console.log(response.data);
-                console.log(response.data.data.account_name);
                 const resolvedAccountName = response.data.data.account_name;
-                if (
-                  user_account_name.toLowerCase() ===
-                  resolvedAccountName.toLowerCase()
-                ) {
+                const userAccountName = user_account_name.toLowerCase();
+                const resolvedAccountNameLower =
+                  resolvedAccountName.toLowerCase();
+                const ld = levenshtein(
+                  userAccountName,
+                  resolvedAccountNameLower
+                );
+
+                if (ld <= 2) {
                   return user
                     .update({
                       is_verified: true,
                     })
                     .then((updatedUser) => {
-                      // Return an object that contains the user object and the id
                       return { ...updatedUser.dataValues, id: updatedUser.id };
                     });
                 } else {
-                  // Return an object that contains the user object and the id
                   return { ...user.dataValues, id: user.id };
                 }
               })
@@ -142,9 +144,6 @@ const mutation = new GraphQLObjectType({
           });
       },
     },
-    // verifyUser: {
-    //   type: UserType,
-    // },
   },
 });
 
