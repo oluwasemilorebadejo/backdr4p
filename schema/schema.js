@@ -159,56 +159,54 @@ const mutation = new GraphQLObjectType({
             throw new Error(errorName.USER_ALREADY_EXISTS);
           }
 
-          return User.create({
-            user_account_number,
-            user_bank_code,
-            user_account_name,
-            is_verified,
-          }).then((user) => {
-            const options = {
-              method: "GET",
-              url: "https://api.paystack.co/bank/resolve",
-              params: {
-                account_number: user.user_account_number,
-                bank_code: user.user_bank_code,
-              },
-              headers: {
-                Authorization:
-                  "Bearer sk_test_b7d166703d2c8883b42f764b528ce128a114743f",
-              },
-            };
+          const options = {
+            method: "GET",
+            url: "https://api.paystack.co/bank/resolve",
+            params: {
+              account_number: user_account_number,
+              bank_code: user_bank_code,
+            },
+            headers: {
+              Authorization:
+                "Bearer sk_test_b7d166703d2c8883b42f764b528ce128a114743f",
+            },
+          };
 
-            return axios(options)
-              .then((response) => {
-                const resolvedAccountName = response.data.data.account_name;
-                const userAccountName = user_account_name.toLowerCase();
-                const resolvedAccountNameLower =
-                  resolvedAccountName.toLowerCase();
-                const ld = levenshtein(
-                  userAccountName,
-                  resolvedAccountNameLower
-                );
+          return axios(options)
+            .then((response) => {
+              const resolvedAccountName = response.data.data.account_name;
+              const userAccountName = user_account_name.toLowerCase();
+              const resolvedAccountNameLower =
+                resolvedAccountName.toLowerCase();
+              const ld = levenshtein(userAccountName, resolvedAccountNameLower);
 
-                if (ld <= 2) {
-                  return user
-                    .update({
-                      is_verified: true,
-                    })
-                    .then((updatedUser) => {
-                      return { ...updatedUser.dataValues, id: updatedUser.id };
-                    });
-                } else {
+              if (ld <= 2) {
+                return User.create({
+                  user_account_number,
+                  user_bank_code,
+                  user_account_name,
+                  is_verified: true,
+                }).then((user) => {
                   return { ...user.dataValues, id: user.id };
-                }
-              })
-              .catch((error) => {
-                console.error(error);
+                });
+              } else {
+                return User.create({
+                  user_account_number,
+                  user_bank_code,
+                  user_account_name,
+                  is_verified,
+                }).then((user) => {
+                  return { ...user.dataValues, id: user.id };
+                });
+              }
+            })
+            .catch((error) => {
+              console.error(error);
 
-                if (error.response && error.response.status === 422) {
-                  throw new Error(errorName.SERVER_ERROR);
-                }
-              });
-          });
+              if (error.response && error.response.status === 422) {
+                throw new Error(errorName.SERVER_ERROR);
+              }
+            });
         });
       },
     },
