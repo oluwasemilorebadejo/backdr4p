@@ -144,6 +144,10 @@ const mutation = new GraphQLObjectType({
           is_verified,
         } = args;
 
+        if (user_account_number.length != 10) {
+          throw new Error(errorName.ACCOUNT_NUMBER_LENGTH_ERROR);
+        }
+
         return User.findOne({
           where: {
             user_account_number,
