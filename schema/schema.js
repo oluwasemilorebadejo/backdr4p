@@ -1,10 +1,6 @@
 const https = require("https");
 const axios = require("axios");
 const levenshtein = require("js-levenshtein");
-
-const User = require("../models/userModel");
-const toTitleCase = require("../utils/titleCase");
-
 const {
   GraphQLObjectType,
   GraphQLID,
@@ -18,7 +14,10 @@ const {
   GraphQLScalarType,
   GraphQLBoolean,
 } = require("graphql");
-const { response } = require("express");
+
+const User = require("../models/userModel");
+const toTitleCase = require("../utils/titleCase");
+const { errorName } = require("../utils/constant");
 
 let bankData = null;
 
@@ -145,13 +144,21 @@ const mutation = new GraphQLObjectType({
           is_verified,
         } = args;
 
-        return User.create({
-          user_account_number,
-          user_bank_code,
-          user_account_name,
-          is_verified,
-        })
-          .then((user) => {
+        return User.findOne({
+          where: {
+            user_account_number,
+          },
+        }).then((existingUser) => {
+          if (existingUser) {
+            throw new Error(errorName.USER_ALREADY_EXISTS);
+          }
+
+          return User.create({
+            user_account_number,
+            user_bank_code,
+            user_account_name,
+            is_verified,
+          }).then((user) => {
             const options = {
               method: "GET",
               url: "https://api.paystack.co/bank/resolve",
@@ -191,10 +198,8 @@ const mutation = new GraphQLObjectType({
               .catch((error) => {
                 console.error(error);
               });
-          })
-          .catch((error) => {
-            console.error(error);
           });
+        });
       },
     },
   },
