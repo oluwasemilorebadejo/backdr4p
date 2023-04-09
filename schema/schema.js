@@ -19,23 +19,23 @@ const User = require("../models/userModel");
 const toTitleCase = require("../utils/titleCase");
 const { errorName } = require("../utils/constant");
 
-let bankData = null;
+// let bankData = null;
 
-const options = {
-  method: "GET",
-  url: "https://api.paystack.co/bank?country=nigeria",
-  headers: {
-    Authorization: "Bearer sk_test_b7d166703d2c8883b42f764b528ce128a114743f",
-  },
-};
+// const options = {
+//   method: "GET",
+//   url: "https://api.paystack.co/bank?country=nigeria",
+//   headers: {
+//     Authorization: "Bearer sk_test_b7d166703d2c8883b42f764b528ce128a114743f",
+//   },
+// };
 
-axios(options)
-  .then((response) => {
-    bankData = response.data;
-  })
-  .catch((error) => {
-    console.error("BANK DATA ERROR: ", error);
-  });
+// axios(options)
+//   .then((response) => {
+//     bankData = response.data;
+//   })
+//   .catch((error) => {
+//     console.error("BANK DATA ERROR: ", error);
+//   });
 
 // setTimeout(() => {
 //   console.log(bankData);
@@ -80,7 +80,7 @@ const RootQuery = new GraphQLObjectType({
           },
         }).then((user) => {
           if (!user) {
-            return null;
+            throw new Error(errorName.USER_DOESNT_EXIST);
           }
 
           if (user.user_account_name) {
