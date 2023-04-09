@@ -144,7 +144,8 @@ const mutation = new GraphQLObjectType({
           is_verified,
         } = args;
 
-        if (user_account_number.length != 10) {
+        // Check that the user account number is exactly 10 digits
+        if (user_account_number.toString().length !== 10) {
           throw new Error(errorName.ACCOUNT_NUMBER_LENGTH_ERROR);
         }
 

@@ -2,6 +2,7 @@ exports.errorName = {
   USER_DOESNT_EXIST: "USER_DOESNT_EXIST",
   USER_ALREADY_EXISTS: "USER_ALREADY_EXISTS",
   SERVER_ERROR: "SERVER_ERROR",
+  ACCOUNT_NUMBER_LENGTH_ERROR: "ACCOUNT_NUMBER_LENGTH_ERROR",
 };
 
 exports.errorType = {
@@ -16,5 +17,10 @@ exports.errorType = {
   SERVER_ERROR: {
     message: "Internal Server error.",
     statusCode: 500,
+  },
+  ACCOUNT_NUMBER_LENGTH_ERROR: {
+    message:
+      "The account number is not complete. Check the number of digits and try again",
+    statusCode: 400,
   },
 };
