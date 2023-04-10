@@ -85,4 +85,4 @@ This will run the unit tests located in the `app.test.js` file. The tests cover 
 
 ### Levenshtein Distance vs Damerau-Levenshtein Distance
 
-In this case, we are only interested in measuring the number of insertions, deletions, or substitutions needed to transform one string into another, and not in measuring the number of transpositions, so the pure Levenshtein Distance algorithm might be more efficient than the Damerau-Levenshtein Distance algorithm. The Damerau–Levenshtein Distance algorithm requires additional computational overhead to detect and account for transpositions, which may not be necessary or useful for this particular use case.
+In this case, we are only interested in measuring the number of insertions, deletions, or substitutions needed to transform one string into another, and not in measuring the number of transpositions, so the pure Levenshtein Distance algorithm will be more efficient than the Damerau-Levenshtein Distance algorithm. The Damerau–Levenshtein Distance algorithm requires additional computational overhead to detect and account for transpositions, which is not necessary or useful for this particular use case.
