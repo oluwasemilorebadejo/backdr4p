@@ -47,7 +47,7 @@ If the validation is successful, the mutation returns a JSON object containing t
 
 graphql
 
-`mutation {   addUser(     user_account_number: "0157148304",     user_bank_code: "011",     user_account_name: "Stand to End Rape Initiative"   ) {     user_bank_code     user_account_name     is_verified     id     } }`
+```graphql mutation {   addUser(     user_account_number: "0157148304",     user_bank_code: "011",     user_account_name: "Stand to End Rape Initiative"   ) {     user_bank_code     user_account_name     is_verified     id     } }```
 
 ## GraphQL Query
 
