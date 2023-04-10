@@ -19,6 +19,16 @@ Follow the steps below to install and set up the project on your local machine:
 3. Create a .env file in the root directory of the project and set the following environment variables: `port` = `5050`
 4. Start the server by running npm run dev or yarn dev
 
+## Assumptions
+- The database table name is users.
+- The Paystack API is used for bank account validation and account name resolution.
+- User's account name input is compared to the account name returned by the Paystack API using the Levenshtein Distance algorithm to account for slight variations.
+- The application already has a registered user object and sets the is_verified attribute to true when a user account is verified.
+- The GraphQL mutation accepts three arguments: user_account_number, user_bank_code, and user_account_name.
+- The GraphQL query accepts two arguments: user_account_number and user_bank_code.
+- User inputted user_account_name is stored in sentence case.
+- The js-levenshtein package is used to compute the Levenshtein Distance.
+
 ## GraphQL Mutation
 
 ### `addUser`
