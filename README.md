@@ -71,7 +71,7 @@ If the account name is successfully retrieved, the query returns a JSON object c
 
 ```graphql
 query {   
-  getUser(account_number: "0157148304", bank_code: "GTB") {    
+  user(account_number: "0157148304", bank_code: "GTB") {    
   user_account_name
   user_bank_code          
   is_verified     
