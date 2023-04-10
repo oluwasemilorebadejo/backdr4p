@@ -74,6 +74,11 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) {
         const { user_account_number, user_bank_code } = args;
 
+        // Check that the user account number is exactly 10 digits
+        if (user_account_number.toString().length !== 10) {
+          throw new Error(errorName.ACCOUNT_NUMBER_LENGTH_ERROR);
+        }
+
         return User.findOne({
           where: {
             user_account_number,
@@ -202,8 +207,14 @@ const mutation = new GraphQLObjectType({
             })
             .catch((error) => {
               console.error(error);
-
-              if (error.response && error.response.status === 422) {
+              console.log();
+              if (
+                error.response &&
+                error.response.status === 422 &&
+                error.response.data.status === false
+              ) {
+                throw new Error(errorName.INVALID_BANK_DETAILS);
+              } else {
                 throw new Error(errorName.SERVER_ERROR);
               }
             });
