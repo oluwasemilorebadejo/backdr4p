@@ -2,6 +2,21 @@
 
 The Backdrop Bank Account Verification API allows users to verify their bank account details by providing their bank account number, selecting a bank name, and writing their name as registered with their banks. The API uses the Paystack account number resolution API to validate the account details provided by the user.
 
+## Requirements
+To complete this challenge, you will need the following:
+
+- Node.js
+- NPM or Yarn
+Paystack API credentials
+A GraphQL client to test the queries and mutations
+A database management system, preferably MySQL or PostgreSQL
+Installation
+Follow the steps below to install and set up the project on your local machine:
+
+Clone the repository to your local machine
+Install the project dependencies by running npm install or yarn install
+Create a .env file in the root directory of the project and set the following environment variables:
+
 ## GraphQL Mutation
 
 ### `addUser`
