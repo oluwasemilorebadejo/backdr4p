@@ -51,7 +51,7 @@ mutation {
   user_bank_code     
   user_account_name     
   is_verified     
-  id     } }
+  id  } }
 ```
 
 ## GraphQL Query
@@ -69,9 +69,13 @@ If the account name is successfully retrieved, the query returns a JSON object c
 
 ### Example
 
-graphql
-
-`query {   getUser(account_number: "0157148304", bank_code: "GTB") {     user_account_name     } }`
+```graphql
+query {   
+  getUser(account_number: "0157148304", bank_code: "GTB") {    
+  user_account_name
+  user_bank_code          
+  is_verified     
+  id  } }`
 
 ## Testing
 
