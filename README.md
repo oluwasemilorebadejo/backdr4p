@@ -7,15 +7,16 @@ To complete this challenge, you will need the following:
 
 - Node.js
 - NPM or Yarn
-Paystack API credentials
-A GraphQL client to test the queries and mutations
-A database management system, preferably MySQL or PostgreSQL
-Installation
+- Paystack API credentials
+- A GraphQL client to test the queries and mutations
+- A database management system, preferably MySQL or PostgreSQL
+- 
+## Installation
 Follow the steps below to install and set up the project on your local machine:
 
-Clone the repository to your local machine
-Install the project dependencies by running npm install or yarn install
-Create a .env file in the root directory of the project and set the following environment variables:
+1. Clone the repository to your local machine
+2. Install the project dependencies by running npm install or yarn install
+3.Create a .env file in the root directory of the project and set the following environment variables:
 
 ## GraphQL Mutation
 
