@@ -72,8 +72,6 @@ graphql
 
 To test the API, run the following command:
 
-arduinoCopy code
-
 `npm test`
 
 This will run the unit tests located in the `app.test.js` file. The tests cover the following scenarios:
