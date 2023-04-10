@@ -26,7 +26,7 @@ const { errorName } = require("../utils/constant");
 //   method: "GET",
 //   url: "https://api.paystack.co/bank?country=nigeria",
 //   headers: {
-//     Authorization: "Bearer sk_test_b7d166703d2c8883b42f764b528ce128a114743f",
+//     Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
 //   },
 // };
 
@@ -106,7 +106,7 @@ const RootQuery = new GraphQLObjectType({
               },
               headers: {
                 Authorization:
-                  "Bearer sk_test_b7d166703d2c8883b42f764b528ce128a114743f",
+                  ,
               },
             };
 
@@ -172,8 +172,7 @@ const mutation = new GraphQLObjectType({
               bank_code: user_bank_code,
             },
             headers: {
-              Authorization:
-                "Bearer sk_test_b7d166703d2c8883b42f764b528ce128a114743f",
+              Authorization:`Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
             },
           };
 
