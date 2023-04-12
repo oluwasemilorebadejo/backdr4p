@@ -105,8 +105,7 @@ const RootQuery = new GraphQLObjectType({
                 bank_code: user.user_bank_code,
               },
               headers: {
-                Authorization:
-                  ,
+                Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
               },
             };
 
@@ -172,7 +171,7 @@ const mutation = new GraphQLObjectType({
               bank_code: user_bank_code,
             },
             headers: {
-              Authorization:`Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+              Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
             },
           };
 
