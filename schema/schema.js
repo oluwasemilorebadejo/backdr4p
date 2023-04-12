@@ -18,7 +18,6 @@ const {
 const User = require("../models/userModel");
 const toTitleCase = require("../utils/titleCase");
 const { errorName } = require("../utils/constant");
-// const { response } = require("../app");
 
 // let bankData = null;
 
