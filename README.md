@@ -3,6 +3,7 @@
 The Backdrop Bank Account Verification API allows users to verify their bank account details by providing their bank account number, selecting a bank name, and writing their name as registered with their banks. The API uses the Paystack account number resolution API to validate the account details provided by the user.
 
 ## Requirements
+
 To complete this challenge, you will need the following:
 
 - Node.js
@@ -12,6 +13,7 @@ To complete this challenge, you will need the following:
 - A database management system, preferably MySQL or PostgreSQL
 
 ## Installation
+
 Follow the steps below to install and set up the project on your local machine:
 
 1. Clone the repository to your local machine
@@ -20,6 +22,7 @@ Follow the steps below to install and set up the project on your local machine:
 4. Start the server by running npm run dev or yarn dev
 
 ## Assumptions
+
 - The database table name is users.
 - The Paystack API is used for bank account validation and account name resolution.
 - User's account name input is compared to the account name returned by the Paystack API using the Levenshtein Distance algorithm to account for slight variations.
@@ -33,9 +36,9 @@ Follow the steps below to install and set up the project on your local machine:
 
 ### `addUser`
 
-This mutation verifies the user's bank account details by validating the `account_number` and `account_name` provided by the user against the Paystack API. If the names match, the user is marked as verified in the database and this result is returned to the front end. If the names do not match, the API computes the Levenshtein distance between the user inputted `account_name` and the `account_name` provided by the Paystack API. If the Levenshtein distance is less than or equal to 2, the user is still verified and this result is returned to the front end. The mutation accepts the following arguments:
+This mutation verifies the user's bank account details by validating the `user_account_number` and `user_account_name` provided by the user against the Paystack API. If the names match, the user is marked as verified in the database and this result is returned to the front end. If the names do not match, the API computes the Levenshtein distance between the user inputted `user_account_name` and the `user_account_name` provided by the Paystack API. If the Levenshtein distance is less than or equal to 2, the user is still verified and this result is returned to the front end. The mutation accepts the following arguments:
 
-- `user_account_number` (required): The user's bank account number
+- `user_account_number` (required): The user's bank account number and it must be unique.
 - `user_bank_code` (required): The user's bank code
 - `user_account_name` : The user's name as registered with their bank
 
@@ -46,12 +49,18 @@ If the validation is successful, the mutation returns a JSON object containing t
 ### Example
 
 ```graphql
-mutation {   
-  addUser(user_account_number: "0157148304", user_bank_code: "011", user_account_name: "Stand to End Rape Initiative"   ) {     
-  user_bank_code     
-  user_account_name     
-  is_verified     
-  id  } }
+mutation {
+  addUser(
+    user_account_number: "0157148304"
+    user_bank_code: "011"
+    user_account_name: "Stand to End Rape Initiative"
+  ) {
+    user_bank_code
+    user_account_name
+    is_verified
+    id
+  }
+}
 ```
 
 ## GraphQL Query
@@ -60,8 +69,8 @@ mutation {
 
 This query returns the account name associated with the given bank account number and bank code. The query first checks if the account name was previously provided by the user and returns this value if it exists. Otherwise, the query makes a call to the Paystack API to retrieve the account name associated with the given account number and bank code. The query returns the account name in sentence case. The query accepts the following arguments:
 
-- `account_number` (required): The bank account number
-- `bank_code` (required): The bank code
+- `user_account_name` (required): The bank account number
+- `user_bank_code` (required): The bank code
 
 If the account name is successfully retrieved, the query returns a JSON object containing the following field:
 
@@ -70,13 +79,15 @@ If the account name is successfully retrieved, the query returns a JSON object c
 ### Example
 
 ```graphql
-query {   
-  user(account_number: "0157148304", bank_code: "GTB") {    
-  user_account_name
-  user_bank_code          
-  is_verified     
-  id  } }
-  ```
+query {
+  user(user_account_number: "0157148304", user_bank_code: "GTB") {
+    user_account_name
+    user_bank_code
+    is_verified
+    id
+  }
+}
+```
 
 ## Testing
 
