@@ -47,7 +47,7 @@ const UserType = new GraphQLObjectType({
   name: "User",
   fields: () => ({
     id: { type: GraphQLID },
-    user_account_number: { type: GraphQLFloat },
+    user_account_number: { type: GraphQLString },
     user_bank_code: { type: GraphQLString },
     user_account_name: { type: GraphQLString },
     is_verified: { type: GraphQLBoolean, defaultValue: false },
@@ -68,7 +68,7 @@ const RootQuery = new GraphQLObjectType({
     user: {
       type: UserType,
       args: {
-        user_account_number: { type: GraphQLFloat },
+        user_account_number: { type: GraphQLString },
         user_bank_code: { type: GraphQLString },
       },
       resolve(parent, args) {
@@ -136,7 +136,7 @@ const mutation = new GraphQLObjectType({
     addUser: {
       type: UserType,
       args: {
-        user_account_number: { type: GraphQLFloat },
+        user_account_number: { type: GraphQLString },
         user_bank_code: { type: GraphQLString },
         user_account_name: { type: GraphQLString },
         is_verified: { type: GraphQLBoolean, defaultValue: false },
