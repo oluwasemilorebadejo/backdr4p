@@ -102,7 +102,7 @@ This will run the unit tests located in the `app.test.js` file. The tests cover 
 - A valid bank account number and incorrect account name are provided, and the Levenshtein distance is greater than 2
 - An invalid bank account number or bank code is provided
 - The `user` query returns the user-provided account name
-- The `user` query returns the account name provided by Paystack
+- The `user` query returns the account name provided by Paystack if the `user_acccount_name` wasnt specified during creation
 
 ### Levenshtein Distance vs Damerau-Levenshtein Distance
 
